@@ -1,25 +1,16 @@
 <?php
 session_start();
-include 'db.php';
+require 'db.php';
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
-    exit();
+    exit;
 }
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "DELETE FROM posts WHERE id=$id";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "✅ Post deleted!";
-    } else {
-        echo "❌ Error deleting post: " . $conn->error;
-    }
-} else {
-    echo "❌ No post ID provided.";
-}
+$id = $_GET['id'];
+$stmt = $conn->prepare("DELETE FROM posts WHERE id=?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
 
 header("Location: index.php");
-exit();
-?>
+exit;
