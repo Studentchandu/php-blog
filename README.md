@@ -21,7 +21,8 @@ It allows users to **register**, **log in**, and **create**, **edit**, and **del
 
 ## 📁 Folder Structure
 /blog ├── db.php ├── register.php ├── login.php ├── logout.php ├── index.php ├── create_post.php ├── edit_post.php ├── delete_post.php └── uploads/ (optional if you add image upload)
-## 🚀 Step 5: How to Run This Project
+
+## 🚀 How to Run This Project
 
 Follow these steps to run the PHP Blog System locally:
 
