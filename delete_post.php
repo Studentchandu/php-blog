@@ -14,3 +14,4 @@ $stmt->execute();
 
 header("Location: index.php");
 exit;
+?>

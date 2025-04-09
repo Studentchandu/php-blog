@@ -22,14 +22,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
-    $error = "Invalid login credentials.";
+    $error = "❌ Invalid login credentials.";
 }
 ?>
 
-<h2>Login</h2>
-<form method="POST">
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
-    <button type="submit">Login</button>
-</form>
-<a href="register.php">Go to Register</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #8e2de2, #ff6ec4);
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            padding-top: 80px;
+        }
+ 
+        form {
+            background: rgba(0,0,0,0.5);
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 25px;
+            background-color: #27ae60;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        a {
+            color: #f1c40f;
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .error {
+            color: #ff4d4d;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🔐 Login</h2>
+    
+    <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <button type="submit">Login</button>
+    </form>
+
+   
+</body>
+</html>
