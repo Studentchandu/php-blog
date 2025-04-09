@@ -89,3 +89,11 @@ This repository contains the source code for a **PHP & MySQL blog application** 
 - Task 3 code committed and pushed to same GitHub repo
 
 ---
+📌 GitHub Commands Used
+
+cd /c/xampp/htdocs/blog     # Go to project folder
+git init                    # Initialize git (if not already done)
+git remote add origin https://github.com/YourUsername/php-blog.git
+git add .
+git commit -m "Task 3: Added search, pagination, homepage, and UI improvements"
+git push -u origin main
