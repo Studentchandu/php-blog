@@ -1,75 +1,91 @@
-# PHP Blog System 📝
-
-A simple blog application developed using **PHP**, **MySQL**, and **XAMPP**.  
-It allows users to **register**, **log in**, and **create**, **edit**, and **delete** blog posts.
-
 ---
+## 📝 PHP Blog System — Internship Tasks (Task 1 to Task 3)
 
-## 🚀 Features
-- ✅ User Registration with password hashing
-- ✅ Secure Login with password verification
-- ✅ Create new blog posts
-- ✅ Edit existing blog posts
-- ✅ Delete blog posts
-- ✅ View all posts (latest first)
-- ✅ Simple and clean UI using HTML and PHP
-
+This repository contains the source code for a **PHP & MySQL blog application** developed as part of the ApexPlanet internship program. The project is divided into **five tasks**, of which the first three are documented below in detail.
 ---
+## ✅ Task 1: Setting Up the Development Environment
 
-## 🛠️ Technologies Used
-- PHP
-- MySQL
-- XAMPP
-- HTML/CSS (basic styling)
+**Objective:** Set up a working PHP + MySQL environment with version control.
 
----
+### 📌 Steps Followed:
+1. **Installed XAMPP** as the local server environment.
+2. Verified Apache and MySQL by visiting `http://localhost` on a browser.
+3. **Created project directory**: `C:/xampp/htdocs/blog`
+4. **Installed Git** and created a GitHub account.
+5. **Initialized Git repo** in the blog project folder:
+   ```bash
+   git init
+   git remote add origin https://github.com/yourusername/php-blog.git
+   ```
+6. Made the **first commit** with `index.php` and `README.md`.
 
-## 📁 Folder Structure
-/blog ├── db.php ├── register.php ├── login.php ├── logout.php ├── index.php ├── create_post.php ├── edit_post.php ├── delete_post.php └── uploads/ (optional if you add image upload)
+### ✅ Deliverables:
+- Functional local server setup
+- Initial GitHub repo with first commit
 
----
+-------------------------------------------------------------------------------------------------------------------
 
-## 🚀 How to Run This Project
+## ✅ Task 2: Basic CRUD Application
 
-### ✅ Requirements:
-- [XAMPP](https://www.apachefriends.org/) installed
-- Web browser (Chrome, Firefox, etc.)
-- Basic knowledge of PHP and MySQL
+**Objective:** Build a blog system with login, registration, and post management.
 
-### 🛠 Steps:
+### 📌 Steps Followed:
 
-1. **Start XAMPP:**
-   - Open XAMPP Control Panel.
-   - Start both `Apache` and `MySQL`.
+#### 🗄️ Database Setup:
+- Created MySQL database named `blog`
+- Created `users` table:
+  - `id`, `username`, `password`
+- Created `posts` table:
+  - `id`, `title`, `content`, `user_id`, `created_at`
 
-2. **Move the Project Folder:**
-   - Place the `blog` folder into:  
-     `C:\xampp\htdocs\blog`
+#### 🔐 User Authentication:
+- `register.php` for new users (with `password_hash()`)
+- `login.php` with session management (`password_verify()`)
+- `logout.php` to destroy session
 
-3. **Create the Database:**
-   - Open browser → go to:  
-     `http://localhost/phpmyadmin`
-   - Click `New`, create a database named: `blog`
+#### 📝 CRUD Operations:
+- `create_post.php` – Create a blog post
+- `edit_post.php` – Edit a post
+- `delete_post.php` – Delete a post
+- `index.php` – View all posts (sorted latest first)
 
-4. **Create Tables:**
-   - Click your `blog` database.
-   - Go to SQL tab and run table creation SQL for:
-     - `users`
-     - `posts`
+### ✅ Deliverables:
+- Fully working login/register + CRUD blog system
+- Sessions protect all post features
+- Code and database pushed to GitHub repo
 
-5. **Run the App in Browser:**
-   - `http://localhost/blog/register.php` → Register a new user  
-   - `http://localhost/blog/login.php` → Log in  
-   - `http://localhost/blog/create_post.php` → Create a blog post  
-   - `http://localhost/blog/index.php` → View all posts  
-   - `http://localhost/blog/edit_post.php?id=1` → Edit a post  
-   - `http://localhost/blog/delete_post.php?id=1` → Delete a post  
+----------------------------------------------------------------------------------------------------------
 
----
+## ✅ Task 3: Advanced Features Implementation
 
-## 🧠 Notes
-- You must be logged in to create, edit, or delete posts.
-- Passwords are securely hashed during registration.
-- This is a beginner-friendly project to understand CRUD operations using PHP + MySQL.
+**Objective:** Enhance UX with search, pagination, and styling.
+
+### 📌 Steps Followed:
+
+#### 🔍 Search Functionality:
+- Added search form in `index.php`
+- PHP filters posts using `LIKE` in title/content
+- Matching posts are shown based on keyword
+
+#### 📄 Pagination:
+- Limited posts to **5 per page** using `LIMIT` and `OFFSET`
+- Total post count calculated with `COUNT(*)`
+- Page navigation links generated dynamically
+
+#### 🎨 User Interface Improvements:
+- Added **consistent inline CSS** to all pages (login, register, create, edit, home, etc.)
+- Used a **purple-pink gradient** background across all pages
+- Designed clean post cards, buttons, inputs
+- Created a **public homepage (`home.php`)** with:
+  - Blog title
+  - Buttons: Register, Login, Logout
+  - Redirects user correctly based on session
+
+### ✅ Deliverables:
+- Functional blog with:
+  - Search by title/content
+  - Pagination across posts
+  - Visually appealing UI
+- Task 3 code committed and pushed to same GitHub repo
 
 ---
