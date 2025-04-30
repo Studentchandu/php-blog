@@ -1,3 +1,4 @@
+// Task 4 update
 <?php
 // Database credentials (consider storing these securely in an environment file)
 $host = "localhost";
