@@ -189,7 +189,7 @@ cd /c/xampp/htdocs/blog      # Go to project folder
 git init                     # Initialize Git (if not already done)
 git remote add origin https://github.com/YourUsername/php-blog.git
 git add .
-git commit -m "Task 3: Added search, pagination, homepage, and UI improvements"
+git commit -m "Task 4: Secured PHP Blog System - Added security measures"
 git push -u origin main
 ```
 ```
