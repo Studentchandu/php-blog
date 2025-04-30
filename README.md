@@ -97,40 +97,35 @@ This repository contains the source code for a **PHP & MySQL blog application** 
   - Visually appealing UI
 - Task 3 code committed and pushed to same GitHub repo
 
----✅ Task 4: Security and Finalization
+---
+
+## ✅ Task 4: Security and Finalization
 Objective: Secure the application, finalize documentation, and push all updates to GitHub.
 
 📌 Steps Followed:
 🔒 Security Measures:
 Converted all SQL queries to use prepared statements to prevent SQL injection.
-
 Implemented server-side validation for all forms.
-
 Added client-side validation using HTML5 attributes (required, maxlength, etc.).
-
 Introduced user roles (admin/editor) via a role column in the users table:
-
 Only post owners or admins can edit/delete posts.
 
 📁 Project Finalization:
+-------------------------
 Created security_measures.txt to document all implemented security features.
-
 Added // Task 4 update comments to all PHP files to track the latest update.
-
 Updated all commit messages and GitHub repo to reflect Task 4.
-
 Cleaned up code and ensured consistent styling.
 
 ✅ Deliverables:
+------------------
 Hardened blog system with protection against SQL injection and unauthorized access
-
 Role-based access control implemented
-
 Finalized and pushed code with Task 4 labels
-
 README.md and all files reflect Task 4 updates
 
 🚀 Features
+------------------
 ✅ User Registration with password hashing
 ✅ Secure Login with password verification
 ✅ Create, Edit, Delete blog posts
@@ -140,18 +135,14 @@ README.md and all files reflect Task 4 updates
 ✅ Clean and colorful UI using inline CSS
 
 🛠️ Technologies Used
+----------------------
 PHP
-
 MySQL
-
 XAMPP
-
 HTML/CSS (inline styling)
 
 📁 Folder Structure
 arduino
-Copy
-Edit
 /php-blog
 ├── db.php
 ├── register.php
@@ -164,67 +155,49 @@ Edit
 ├── delete_post.php
 ├── security_measures.txt
 └── uploads/ (optional if using image uploads)
+
 🚀 How to Run This Project
 ✅ Requirements:
 XAMPP installed
-
 Web browser (Chrome, Firefox, etc.)
-
 Basic knowledge of PHP and MySQL
 
 🛠 Steps:
+--------------------
 1. Start XAMPP:
 Open XAMPP Control Panel
-
 Start both Apache and MySQL
 
 2. Move the Project Folder:
-Place the project folder into:
-
-bash
-Copy
-Edit
+Place the project folder into
 C:/xampp/htdocs/php-blog
-3. Create the Database:
-Go to http://localhost/phpmyadmin
 
-Click New, create a database named: blog
+4. Create the Database:
+Go to http://localhost/phpmyadmin
+Click New, create a database named: php-blog
 
 4. Create Tables:
 Click on blog database → Go to SQL tab
-
 Run SQL to create:
-
 users table
-
 posts table
 
 5. Run the App in Browser:
 Register: http://localhost/php-blog/register.php
-
 Login: http://localhost/php-blog/login.php
-
 Create post: http://localhost/php-blog/create_post.php
-
 View posts: http://localhost/php-blog/index.php
-
 Edit post: http://localhost/php-blog/edit_post.php?id=1
-
 Delete post: http://localhost/php-blog/delete_post.php?id=1
 
 🧠 Notes
 You must be logged in to create, edit, or delete posts.
-
 Posts can only be edited or deleted by the owner or admin.
-
 Passwords are securely hashed during registration.
-
 This is a beginner-friendly project built using PHP and MySQL.
 
 📌 GitHub Commands Used
-bash
-Copy
-Edit
+
 cd /c/xampp/htdocs/php-blog      # Navigate to project
 git init                         # Initialize Git
 git remote add origin https://github.com/YourUsername/php-blog.git
