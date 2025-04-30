@@ -1,6 +1,3 @@
-Thanks — that’s the full content of your conflicted `README.md`. The conflict is in the section with GitHub commands and extra project metadata. Let me now help you **resolve the conflict** by merging the useful parts from **both versions**.
-
----
 
 ### ✅ Cleaned and Merged `README.md` (Final Version)
 
@@ -100,29 +97,62 @@ This repository contains the source code for a **PHP & MySQL blog application** 
   - Visually appealing UI
 - Task 3 code committed and pushed to same GitHub repo
 
----
+---✅ Task 4: Security and Finalization
+Objective: Secure the application, finalize documentation, and push all updates to GitHub.
 
-## 🚀 Features
-- ✅ User Registration with password hashing
-- ✅ Secure Login with password verification
-- ✅ Create, Edit, Delete blog posts
-- ✅ View all posts (latest first)
-- ✅ Search and pagination features
-- ✅ Simple and clean UI using HTML, PHP, and inline CSS
+📌 Steps Followed:
+🔒 Security Measures:
+Converted all SQL queries to use prepared statements to prevent SQL injection.
 
----
+Implemented server-side validation for all forms.
 
-## 🛠️ Technologies Used
-- PHP
-- MySQL
-- XAMPP
-- HTML/CSS (basic styling)
+Added client-side validation using HTML5 attributes (required, maxlength, etc.).
 
----
+Introduced user roles (admin/editor) via a role column in the users table:
 
-## 📁 Folder Structure
-```
-/blog
+Only post owners or admins can edit/delete posts.
+
+📁 Project Finalization:
+Created security_measures.txt to document all implemented security features.
+
+Added // Task 4 update comments to all PHP files to track the latest update.
+
+Updated all commit messages and GitHub repo to reflect Task 4.
+
+Cleaned up code and ensured consistent styling.
+
+✅ Deliverables:
+Hardened blog system with protection against SQL injection and unauthorized access
+
+Role-based access control implemented
+
+Finalized and pushed code with Task 4 labels
+
+README.md and all files reflect Task 4 updates
+
+🚀 Features
+✅ User Registration with password hashing
+✅ Secure Login with password verification
+✅ Create, Edit, Delete blog posts
+✅ View all posts (latest first)
+✅ Search and pagination features
+✅ Role-based access control (admin/editor)
+✅ Clean and colorful UI using inline CSS
+
+🛠️ Technologies Used
+PHP
+
+MySQL
+
+XAMPP
+
+HTML/CSS (inline styling)
+
+📁 Folder Structure
+arduino
+Copy
+Edit
+/php-blog
 ├── db.php
 ├── register.php
 ├── login.php
@@ -132,79 +162,85 @@ This repository contains the source code for a **PHP & MySQL blog application** 
 ├── create_post.php
 ├── edit_post.php
 ├── delete_post.php
-└── uploads/ (optional if you add image upload)
-```
+├── security_measures.txt
+└── uploads/ (optional if using image uploads)
+🚀 How to Run This Project
+✅ Requirements:
+XAMPP installed
 
----
+Web browser (Chrome, Firefox, etc.)
 
-## 🚀 How to Run This Project
+Basic knowledge of PHP and MySQL
 
-### ✅ Requirements:
-- [XAMPP](https://www.apachefriends.org/) installed
-- Web browser (Chrome, Firefox, etc.)
-- Basic knowledge of PHP and MySQL
+🛠 Steps:
+1. Start XAMPP:
+Open XAMPP Control Panel
 
-### 🛠 Steps:
+Start both Apache and MySQL
 
-1. **Start XAMPP:**
-   - Open XAMPP Control Panel.
-   - Start both `Apache` and `MySQL`.
+2. Move the Project Folder:
+Place the project folder into:
 
-2. **Move the Project Folder:**
-   - Place the `blog` folder into:  
-     `C:\xampp\htdocs\blog`
+bash
+Copy
+Edit
+C:/xampp/htdocs/php-blog
+3. Create the Database:
+Go to http://localhost/phpmyadmin
 
-3. **Create the Database:**
-   - Open browser → go to:  
-     `http://localhost/phpmyadmin`
-   - Click `New`, create a database named: `blog`
+Click New, create a database named: blog
 
-4. **Create Tables:**
-   - Click your `blog` database.
-   - Go to SQL tab and run table creation SQL for:
-     - `users`
-     - `posts`
+4. Create Tables:
+Click on blog database → Go to SQL tab
 
-5. **Run the App in Browser:**
-   - `http://localhost/blog/register.php` → Register a new user  
-   - `http://localhost/blog/login.php` → Log in  
-   - `http://localhost/blog/create_post.php` → Create a blog post  
-   - `http://localhost/blog/index.php` → View all posts  
-   - `http://localhost/blog/edit_post.php?id=1` → Edit a post  
-   - `http://localhost/blog/delete_post.php?id=1` → Delete a post  
+Run SQL to create:
 
----
+users table
 
-## 🧠 Notes
-- You must be logged in to create, edit, or delete posts.
-- Passwords are securely hashed during registration.
-- This is a beginner-friendly project to understand CRUD operations using PHP + MySQL.
+posts table
 
----
+5. Run the App in Browser:
+Register: http://localhost/php-blog/register.php
 
-## 📌 GitHub Commands Used
+Login: http://localhost/php-blog/login.php
 
-```bash
-cd /c/xampp/htdocs/blog      # Go to project folder
-git init                     # Initialize Git (if not already done)
+Create post: http://localhost/php-blog/create_post.php
+
+View posts: http://localhost/php-blog/index.php
+
+Edit post: http://localhost/php-blog/edit_post.php?id=1
+
+Delete post: http://localhost/php-blog/delete_post.php?id=1
+
+🧠 Notes
+You must be logged in to create, edit, or delete posts.
+
+Posts can only be edited or deleted by the owner or admin.
+
+Passwords are securely hashed during registration.
+
+This is a beginner-friendly project built using PHP and MySQL.
+
+📌 GitHub Commands Used
+bash
+Copy
+Edit
+cd /c/xampp/htdocs/php-blog      # Navigate to project
+git init                         # Initialize Git
 git remote add origin https://github.com/YourUsername/php-blog.git
 git add .
 git commit -m "Task 4: Secured PHP Blog System - Added security measures"
 git push -u origin main
-```
-```
+yaml
+Copy
+Edit
 
 ---
 
-### ✅ Final Steps
-
-1. Save this updated content into your `README.md`.
-2. In Git Bash, run:
-
+### ✅ Next Step:
+1. Copy and **replace your current `README.md`** content with this version.
+2. Then commit and push it:
 ```bash
 git add README.md
-git rebase --continue
-git push origin main --force
-```
-
-Let me know when you're ready to start documenting Task 4 or need help with pushing `security_measures.txt`.
+git commit -m "Task 4: Updated README with final documentation"
+git push origin main
