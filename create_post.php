@@ -1,32 +1,43 @@
 <?php
 session_start();
+require 'db.php';
+
 if (!isset($_SESSION['username'])) {
     echo "🚫 Access denied. <a href='login.php'>Login</a>";
     exit();
 }
 
-include 'db.php';
-
-// Get user ID from username
+// Get user data
 $username = $_SESSION['username'];
-$userQuery = $conn->prepare("SELECT id FROM users WHERE username = ?");
-$userQuery->bind_param("s", $username);
-$userQuery->execute();
-$userResult = $userQuery->get_result();
-$user = $userResult->fetch_assoc();
+$stmt = $conn->prepare("SELECT id, role FROM users WHERE username = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    echo "❌ User not found.";
+    exit();
+}
+
 $user_id = $user['id'];
+$role = $user['role'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
 
-    $stmt = $conn->prepare("INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssi", $title, $content, $user_id);
-
-    if ($stmt->execute()) {
-        echo "✅ Post created successfully! <a href='index.php'>View all posts</a>";
+    if (empty($title) || empty($content)) {
+        echo "❗ Both title and content are required.";
     } else {
-        echo "❌ Error: " . $conn->error;
+        $stmt = $conn->prepare("INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)");
+        $stmt->bind_param("ssi", $title, $content, $user_id);
+
+        if ($stmt->execute()) {
+            echo "✅ Post created successfully! <a href='index.php'>View all posts</a>";
+        } else {
+            echo "❌ Error: " . $conn->error;
+        }
     }
 }
 ?>
@@ -38,11 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #e8f0fe;
+            background: linear-gradient(to right, #c2e9fb, #a1c4fd);
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
             color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         h2 {
@@ -96,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="logo">📝 MiniBlog</div>
     <h2>Create New Blog Post</h2>
-    <form method="POST" action="">
+    <form method="POST">
         <label>Title:</label><br>
         <input type="text" name="title" required><br>
 

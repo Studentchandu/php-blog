@@ -7,12 +7,29 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
+
+// Get user's role
+$role = '';
+$stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$stmt->bind_result($role);
+$stmt->fetch();
+$stmt->close();
+
 // Search setup
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $searchSql = '';
+$params = [];
+$types = '';
+
 if (!empty($search)) {
-    $escapedSearch = $conn->real_escape_string($search);
-    $searchSql = "WHERE title LIKE '%$escapedSearch%' OR content LIKE '%$escapedSearch%'";
+    $searchSql = "WHERE title LIKE ? OR content LIKE ?";
+    $searchTerm = '%' . $search . '%';
+    $params = [$searchTerm, $searchTerm];
+    $types = 'ss';
 }
 
 // Pagination setup
@@ -21,14 +38,34 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($page < 1) $page = 1;
 $offset = ($page - 1) * $limit;
 
-// Count total posts for pagination
-$countResult = $conn->query("SELECT COUNT(*) AS total FROM posts $searchSql");
+// Count total posts
+$countQuery = "SELECT COUNT(*) AS total FROM posts " . ($searchSql ? $searchSql : "");
+$countStmt = $conn->prepare($countQuery);
+if ($searchSql) $countStmt->bind_param($types, ...$params);
+$countStmt->execute();
+$countResult = $countStmt->get_result();
 $totalPosts = $countResult->fetch_assoc()['total'];
+$countStmt->close();
 $totalPages = ceil($totalPosts / $limit);
 
 // Fetch posts
-$sql = "SELECT * FROM posts $searchSql ORDER BY created_at DESC LIMIT $offset, $limit";
-$result = $conn->query($sql);
+$sql = "SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ";
+if ($searchSql) $sql .= $searchSql . " ";
+$sql .= "ORDER BY created_at DESC LIMIT ?, ?";
+$fetchStmt = $conn->prepare($sql);
+
+// Bind parameters with limit/offset
+if ($searchSql) {
+    $types .= 'ii';
+    $params[] = $offset;
+    $params[] = $limit;
+    $fetchStmt->bind_param($types, ...$params);
+} else {
+    $fetchStmt->bind_param("ii", $offset, $limit);
+}
+
+$fetchStmt->execute();
+$result = $fetchStmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -126,7 +163,7 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-<h2>👋 Welcome, <?= htmlspecialchars($_SESSION['username']) ?>!</h2>
+<h2>👋 Welcome, <?= htmlspecialchars($username) ?>!</h2>
 <p>
     <a href="create_post.php">✍️ Create New Post</a> |
     <a href="logout.php">🚪 Logout</a>
@@ -145,9 +182,11 @@ $result = $conn->query($sql);
         <div class="post">
             <h4><?= htmlspecialchars($row['title']) ?></h4>
             <p><?= nl2br(htmlspecialchars($row['content'])) ?></p>
-            <small>📅 <?= $row['created_at'] ?></small><br>
-            <a href="edit_post.php?id=<?= $row['id'] ?>">✏️ Edit</a> |
-            <a href="delete_post.php?id=<?= $row['id'] ?>" onclick="return confirm('Delete this post?');">🗑️ Delete</a>
+            <small>📅 <?= $row['created_at'] ?> | 👤 <?= htmlspecialchars($row['username']) ?></small><br>
+            <?php if ($role === 'admin' || $row['user_id'] == $user_id): ?>
+                <a href="edit_post.php?id=<?= $row['id'] ?>">✏️ Edit</a> |
+                <a href="delete_post.php?id=<?= $row['id'] ?>" onclick="return confirm('Delete this post?');">🗑️ Delete</a>
+            <?php endif; ?>
         </div>
     <?php endwhile; ?>
 <?php else: ?>

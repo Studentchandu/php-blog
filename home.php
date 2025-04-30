@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+// If the user is already logged in, send them to the dashboard
+if (isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,13 +72,8 @@ session_start();
     <div class="container">
         <h1>📝 Blog System</h1>
 
-        <?php if (isset($_SESSION['username'])): ?>
-            <p>Welcome, <strong><?= htmlspecialchars($_SESSION['username']) ?></strong>!</p>
-            <a href="logout.php" class="btn logout-btn">Logout</a>
-        <?php else: ?>
-            <a href="register.php" class="btn register-btn">Register</a>
-            <a href="login.php" class="btn login-btn">Login</a>
-        <?php endif; ?>
+        <a href="register.php" class="btn register-btn">Register</a>
+        <a href="login.php" class="btn login-btn">Login</a>
     </div>
 </body>
 </html>

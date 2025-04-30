@@ -7,25 +7,62 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$id = $_GET['id'];
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "Invalid post ID.";
+    exit;
+}
 
+$post_id = intval($_GET['id']);
+$user_id = $_SESSION['user_id'];
+
+// Get user role
+$stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$role = $user['role'] ?? '';
+
+// Check post ownership for editors
+if ($role === 'editor') {
+    $stmt = $conn->prepare("SELECT id FROM posts WHERE id = ? AND user_id = ?");
+    $stmt->bind_param("ii", $post_id, $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows === 0) {
+        echo "Access denied. Editors can only edit their own posts.";
+        exit;
+    }
+}
+
+// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
 
-    $stmt = $conn->prepare("UPDATE posts SET title=?, content=? WHERE id=?");
-    $stmt->bind_param("ssi", $title, $content, $id);
+    if (empty($title) || empty($content)) {
+        echo "All fields are required.";
+        exit;
+    }
+
+    $stmt = $conn->prepare("UPDATE posts SET title = ?, content = ? WHERE id = ?");
+    $stmt->bind_param("ssi", $title, $content, $post_id);
     $stmt->execute();
 
     header("Location: index.php");
     exit;
 }
 
-$stmt = $conn->prepare("SELECT title, content FROM posts WHERE id=?");
-$stmt->bind_param("i", $id);
+// Get current post data
+$stmt = $conn->prepare("SELECT title, content FROM posts WHERE id = ?");
+$stmt->bind_param("i", $post_id);
 $stmt->execute();
 $stmt->bind_result($title, $content);
-$stmt->fetch();
+if (!$stmt->fetch()) {
+    echo "Post not found.";
+    exit;
+}
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
